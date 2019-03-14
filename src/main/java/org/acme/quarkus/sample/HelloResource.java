@@ -1,16 +1,26 @@
 package org.acme.quarkus.sample;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Inject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
-@Path("/hello")
+@Path("/person")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class HelloResource {
 
+    @Inject
+    PersonService personService;
+
+    @POST
+    public void persist(String name) {
+        personService.persist(name);
+    }
+
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
+    @Path("/search")
+    public List<Person> search(@QueryParam("name") String name) {
+        return personService.searchByName(name);
     }
 }

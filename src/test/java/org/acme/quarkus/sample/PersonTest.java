@@ -1,17 +1,18 @@
 package org.acme.quarkus.sample;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
 public class PersonTest {
 
     @Test
+    @Transactional
     public void testFindByName() {
         //setup
         addPerson("Wael");
@@ -22,10 +23,7 @@ public class PersonTest {
         List<Person> persons = Person.searchByName("oha");
 
         // then
-        assertThat(persons, contains(
-                hasProperty("name", is("Mohammad")),
-                hasProperty("name", is("Mohannad"))
-        ));
+        MatcherAssert.assertThat(persons, Matchers.hasSize(2));
     }
 
     private void addPerson(String name) {
