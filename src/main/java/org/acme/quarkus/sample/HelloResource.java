@@ -11,7 +11,6 @@ public class HelloResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        Person.findById(1);
-        return "xyz";
+        return "hello";
     }
 }
