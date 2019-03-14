@@ -36,6 +36,6 @@ public class PersonServiceTest {
         List<Person> persons = personService.searchByName("oha");
 
         // then
-        MatcherAssert.assertThat(persons, Matchers.hasSize(2));
+        MatcherAssert.assertThat(persons.size(), Matchers.greaterThanOrEqualTo(2));
     }
 }
